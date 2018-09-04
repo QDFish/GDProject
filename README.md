@@ -22,7 +22,7 @@ pod 'GDProject'
 
 ## Author
 
-QDFish, zhengzonggang@taqu.cn
+QDFish, qdfishyooooooh@gmail.com
 
 ## License
 
