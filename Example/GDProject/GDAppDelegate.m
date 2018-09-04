@@ -7,12 +7,26 @@
 //
 
 #import "GDAppDelegate.h"
+#import "GDTabBarController.h"
+
 
 @implementation GDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [UINavigationController setScreenShootEnable:YES];
+    [UINavigationController setPopCoverAlpha:0.6 animationDuration:0.3 minPopWidth:100 maxDragLeft:40];
+    [UIViewController registerNetworkClass:@"GDMyNetwork"];
+    [UIViewController registerInteractionClass:@"GDMyInteraction"];
+    
+    GDTabBarController *tabC = [GDTabBarController shareInstance];
+ 
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = tabC;
+    [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
 

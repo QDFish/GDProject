@@ -13,4 +13,9 @@
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
+
+#import <GDProject/GDProject.h>
+#import "GDMyNetwork.h"
+#import "GDTabBarController.h"
+#import "GDMyInteraction.h"
 #endif

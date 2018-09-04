@@ -1,0 +1,33 @@
+{
+  "name": "GDProject",
+  "version": "0.1.0",
+  "summary": "A short description of GDProject.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/QDFish/GDProject",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "QDFish": "qdfishyooooooh@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/QDFish/GDProject.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "GDProject/*",
+  "dependencies": {
+    "UITableView+FDTemplateLayoutCell": [
+
+    ],
+    "AFNetworking": [
+
+    ],
+    "Masonry": [
+
+    ]
+  }
+}

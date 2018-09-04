@@ -1,0 +1,6 @@
+framework module GDProject {
+  umbrella header "GDProject-umbrella.h"
+
+  export *
+  module * { export * }
+}
