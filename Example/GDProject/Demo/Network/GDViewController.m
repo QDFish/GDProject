@@ -10,6 +10,8 @@
 #import <GDProject/UIViewController+Extension.h>
 #import <Masonry/Masonry.h>
 
+#import "NSString+tmp.h"
+
 @interface GDViewController ()
 
 @property (nonatomic, strong) UILabel *tipLab;
@@ -107,6 +109,30 @@
         make.top.equalTo(showEmptyBtn);
     }];
 
+    
+    UIButton *showLineUppercase = [[UIButton alloc] init];
+    [showLineUppercase setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [showLineUppercase setTitle:@"showLineUppercase" forState:UIControlStateNormal];
+    [showLineUppercase addTarget:self action:@selector(showLineUppercaseAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:showLineUppercase];
+    
+    [showLineUppercase mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(showEmptyBtn);
+        make.top.equalTo(showEmptyBtn.mas_bottom).offset(4);
+    }];
+
+    
+    UIButton *showLineLowercase = [[UIButton alloc] init];
+    [showLineLowercase setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [showLineLowercase setTitle:@"showLineLowercase" forState:UIControlStateNormal];
+    [showLineLowercase addTarget:self action:@selector(showLineLowercaseAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:showLineLowercase];
+    
+    [showLineLowercase mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(showLineUppercase.mas_right).offset(4);
+        make.top.equalTo(showEmptyBtn.mas_bottom).offset(4);
+    }];
+
 
     
     
@@ -153,10 +179,20 @@
     [self.gd_interaction showError:YES];
 }
 
+
+- (void)showLineUppercaseAction {
+    [self.gd_interaction showToast:[self.msgField.text deleteLineAndUppercase]];
+    
+}
+
+- (void)showLineLowercaseAction {    
+    [self.gd_interaction showToast:self.msgField.text.addLineAndLowercase];
+}
+
 #pragma mark - network delegate
 
 - (NSString *)networkRequestURL {
-    return @"http://192.168.2.106/develop/NormalPageURL.php";
+    return @"http://10.10.98.154/develop/NormalPageURL.php";
 }
 
 - (NSString *)httpMethod {

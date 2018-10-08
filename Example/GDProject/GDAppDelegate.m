@@ -9,6 +9,9 @@
 #import "GDAppDelegate.h"
 #import "GDTabBarController.h"
 
+@interface GDAppDelegate() <UITabBarControllerDelegate>
+
+@end
 
 @implementation GDAppDelegate
 
@@ -20,7 +23,7 @@
     [UIViewController registerInteractionClass:@"GDMyInteraction"];
     
     GDTabBarController *tabC = [GDTabBarController shareInstance];
- 
+    tabC.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = tabC;
@@ -55,6 +58,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+    
 }
 
 @end

@@ -6,6 +6,7 @@
 //
 
 #import "NSObject+Router.h"
+#import "NSString+Extension.h"
 #import <objc/runtime.h>
 
 @implementation NSObject (Router)
@@ -72,7 +73,6 @@
         }
     }];
     
-    
     toVC.hidesBottomBarWhenPushed = hidden;
     [currentVC.navigationController pushViewController:toVC animated:animated];
 }
@@ -123,6 +123,251 @@
     }
     
     return allVar;
+}
+
++ (void)validProperty {
+    
+    NSMutableArray *attributes = [NSMutableArray array];
+    unsigned int outCount;
+    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
+    for (int i = 0; i < outCount; i++) {
+        objc_property_t property = propertys[i];
+        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+        [attributes addObject:[propertyAttribute componentsSeparatedByString:@","]];
+    }
+    
+//    NSMutableArray *propertys = [NSMutableArray array];
+    for (NSArray *attribute in attributes) {
+        GDProperty *property = [GDProperty modelWithAttribute:attribute];
+        NSLog(@"%@", property);
+    }
+}
+
++ (void)logAllProperty {
+    unsigned int outCount;
+    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
+    for (int i = 0; i < outCount; i++) {
+        objc_property_t property = propertys[i];
+        NSString *propertyName = [NSString stringWithUTF8String:property_getName(property)];
+        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+        NSLog(@"propertyName:%@ propertyAttribute:%@", propertyName, propertyAttribute);
+    }
+}
+
+
+
+@end
+
+@implementation NSObject (GDModel)
+
++ (instancetype)gd_modelWithJson:(NSDictionary *)dict {
+    id model = [self new];
+    
+    NSMutableArray *attributes = [NSMutableArray array];
+    unsigned int outCount;
+    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
+    for (int i = 0; i < outCount; i++) {
+        objc_property_t property = propertys[i];
+        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+        [attributes addObject:[propertyAttribute componentsSeparatedByString:@","]];
+    }
+    
+    for (NSArray *attribute in attributes) {
+        GDProperty *property = [GDProperty modelWithAttribute:attribute];
+        
+        if (property.type == GDPropertyTypeInvalid || property.readonly) {
+            continue;
+        }
+        
+        [model gd_setValueWithJson:dict forProperty:property];
+    }
+        
+    return model;
+}
+
+- (NSDictionary *)gd_json {
+    
+    NSMutableArray *attributes = [NSMutableArray array];
+    unsigned int outCount;
+    objc_property_t *propertys = class_copyPropertyList(self.class, &outCount);
+    for (int i = 0; i < outCount; i++) {
+        objc_property_t property = propertys[i];
+        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+        [attributes addObject:[propertyAttribute componentsSeparatedByString:@","]];
+    }
+    
+    NSMutableDictionary *json = [NSMutableDictionary dictionary];
+    for (NSArray *attribute in attributes) {
+        GDProperty *property = [GDProperty modelWithAttribute:attribute];
+        
+        if (property.type == GDPropertyTypeInvalid || property.readonly) {
+            continue;
+        }
+        
+        NSString *key = property.name;
+        if ([self.class keyTransform] == GDModelKeyTransformUppercaseAndDeleteUnderline) {
+            key = key.addLineAndLowercase;
+        }
+        
+        id obj;
+        
+        if (property.type == GDPropertyTypeNSObject) {
+            id propertyObj = [self valueForKey:property.name];
+            NSDictionary *propertyDic = [propertyObj gd_json];
+            if ([propertyDic isKindOfClass:[NSDictionary class]]) {
+                obj = propertyDic;
+            }
+        } else if (property.type == GDPropertyTypeNSArray) {
+            NSMutableArray *propertyMArr = [NSMutableArray array];
+            NSArray *propertyArr = [self valueForKey:property.name];
+            for (id propertyObj in propertyArr) {
+                NSDictionary *propertyDic = [propertyObj gd_json];
+                if ([propertyDic isKindOfClass:[NSDictionary class]]) {
+                    [propertyMArr addObject:propertyDic];
+                }
+            }
+            obj = propertyMArr;
+        } else {
+            obj = [self valueForKey:property.name];
+        }
+        
+        if (obj && ![obj isKindOfClass:[NSNull class]]) {
+            [json setObject:obj forKey:key];
+        }                
+    }
+    
+    return json;
+}
+
+
+
+- (void)gd_setValueWithJson:(NSDictionary *)dict forProperty:(GDProperty *)property {
+    if ([NSString isEmpty:property.name] || ![dict isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
+    NSString *key = property.name;
+    if ([self.class keyTransform] == GDModelKeyTransformUppercaseAndDeleteUnderline) {
+        key = key.addLineAndLowercase;;
+    }
+    
+    id value = dict[key];
+    
+    if ([value isKindOfClass:[NSNull class]] || !value) {
+        return;
+    }
+    
+    //对象
+    if (property.type == GDPropertyTypeNSObject &&
+        [value isKindOfClass:[NSDictionary class]]) {
+        value = [property.propertyClass gd_modelWithJson:value];
+    }
+    
+    //数组
+    else if (property.type == GDPropertyTypeNSArray &&
+               NSClassFromString(property.protocol) &&
+               [value isKindOfClass:[NSArray class]]) {
+        NSMutableArray *valueMarr = [NSMutableArray array];
+        for (NSDictionary *valueDic in value) {
+            if ([valueDic isKindOfClass:[NSDictionary class]]) {
+                id valueItem = [NSClassFromString(property.protocol) gd_modelWithJson:valueDic];
+                [valueMarr addObject:valueItem];
+            }
+        }
+        
+        value = valueMarr;
+        if ([NSStringFromClass(property.propertyClass) isEqualToString:@"NSArray"]) {
+            value = [valueMarr copy];
+        }        
+    }
+    
+    else if (property.type == GDPropertyTypeUInteger) {
+        if ([value isKindOfClass:[NSString class]]) {
+            value = [NSNumber numberWithInteger:[value integerValue]];
+        }
+    }
+    
+    [self setValue:value forKey:property.name];
+}
+
++ (GDModelKeyTransform)keyTransform {
+    return GDModelKeyTransformUppercaseAndDeleteUnderline;
+}
+
+@end
+
+@implementation GDProperty
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"GDProperty name:%@, type:%ld, protocol:%@ readonly:%d", self.name, self.type, self.protocol, self.readonly];
+}
+
+
++ (instancetype)modelWithAttribute:(NSArray *)attribute {
+    GDProperty *property = [GDProperty new];
+    
+    for (NSString *attStr in attribute) {
+        char firstC = [attStr UTF8String][0];
+        switch (firstC) {
+            case 'T':{
+                NSScanner *scanner = [[NSScanner alloc] initWithString:attStr];
+                NSString *type;
+                NSString *protocol;
+                
+                //NSObject
+                if ([scanner scanString:@"T@\"" intoString:NULL]) {
+                    [scanner scanUpToCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString:@"<\""] intoString:&type];
+                    if ([scanner scanString:@"<" intoString:NULL]) {
+                        [scanner scanUpToString:@">\"" intoString:&protocol];
+                    }
+                    
+                    if ([type length] >= 2 && [[type substringWithRange:NSMakeRange(0, 2)] isEqualToString:@"NS"]) {
+                        if ([[NSClassFromString(type) new] isKindOfClass:[NSArray class]]) {
+                            property.type = GDPropertyTypeNSArray;
+                        } else if ([[NSClassFromString(type) new] isKindOfClass:[NSString class]]) {
+                            property.type = GDPropertyTypeNSString;
+                        } else if ([type isEqualToString:@"NSNumber"]) {
+                            property.type = GDPropertyTypeNSNumber;
+                        } else {
+                            property.type = GDPropertyTypeInvalid;
+                        }
+                    } else if ([type length] >= 2 && [[type substringWithRange:NSMakeRange(0, 2)] isEqualToString:@"UI"]) {
+                        property.type = GDPropertyTypeInvalid;
+                    } else {
+                        property.type = GDPropertyTypeNSObject;
+                    }
+                    property.protocol = protocol;
+                    property.propertyClass = NSClassFromString(type);
+                }                
+                
+                else if ([scanner scanString:@"T" intoString:NULL]) {
+                    [scanner scanUpToString:@"" intoString:&type];
+                    
+                    //**, union, struct is invalid
+                    if ([@[@"^", @"(", @"{"] containsObject:[type substringToIndex:1]]) {
+                        property.type = GDPropertyTypeInvalid;
+                    } else if ([@"Q" isEqualToString:type]) {
+                        property.type = GDPropertyTypeUInteger;
+                    } else {
+                        property.type = GDPropertyTypeAssign;
+                    }
+                }
+            }
+                break;
+            case 'R':{
+                property.readonly = YES;
+            }
+                break;
+            case 'V':{
+                property.name = [attStr substringFromIndex:2];
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+    return property; 
 }
 
 @end

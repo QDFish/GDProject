@@ -18,5 +18,6 @@ TODO: Add long description of the pod here.
   s.dependency 'UITableView+FDTemplateLayoutCell'
   s.dependency 'AFNetworking'
   s.dependency 'Masonry'
+  s.dependency 'MJRefresh'
   
 end

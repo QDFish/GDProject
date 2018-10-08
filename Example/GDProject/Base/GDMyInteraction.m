@@ -8,6 +8,9 @@
 
 #import "GDMyInteraction.h"
 #import <Masonry/Masonry.h>
+#import <objc/runtime.h>
+#import <MJRefresh/MJRefresh.h>
+
 
 @interface GDMyInteraction()
 
@@ -36,14 +39,30 @@
         self.backgroudColor = [UIColor whiteColor];
         self.canDragPop = YES;
         self.navigationBarHidden = NO;
+        self.canPullDown = YES;
+        self.canPullUp = YES;
+        self.page = 1;
+        self.limit = 10;
     }
     
     return self;
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     self.vc.edgesForExtendedLayout = UIRectEdgeNone;
     self.vc.view.backgroundColor = self.backgroudColor;
+    
+    if (self.vcType == GDViewControllerTypeTable) {
+        [self.vc.gd_tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.vc.view);
+        }];
+    } else if (self.vcType == GDViewControllerTypeCollection) {
+        self.vc.gd_collectionView.backgroundColor = [UIColor whiteColor];
+        [self.vc.gd_collectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.vc.view);
+        }];
+    }
     
     if ([self.vc.navigationController.viewControllers count] > 1) {
         [self constructBackBtn];
@@ -241,6 +260,30 @@
     } else {
         [self.indicator stopAnimating];
     }
+}
+
+- (void)showNoMoreData {
+    if (self.vcType == GDViewControllerTypeTable) {
+        [self.vc.gd_tableView.mj_footer endRefreshingWithNoMoreData];
+    } else if (self.vcType == GDViewControllerTypeCollection) {
+        [self.vc.gd_collectionView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+- (void)prepareForPullDownLoad {
+    self.page = 1;
+}
+
+- (void)prepareForPullUpLoad {
+    self.page++;
+}
+
+@end
+
+@implementation UIViewController (GDMyInteraction)
+
+- (GDMyInteraction *)myInteraction {
+    return (GDMyInteraction *)self.gd_interaction;
 }
 
 

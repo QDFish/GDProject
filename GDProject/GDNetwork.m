@@ -46,8 +46,6 @@
     return _manager;
 }
 
-
-
 - (void)createAndSendPageRequest {
     NSString *httpMethod =  GD_SAFE_CALL_SEL_MULTI_PARAMETERS(self.delegate, @selector(httpMethod), nil);
     NSString *parameters = GD_SAFE_CALL_SEL_MULTI_PARAMETERS(self.delegate, @selector(parameters), nil);
@@ -78,9 +76,12 @@
 
 - (id)handleResponseWithTask:(NSURLSessionDataTask *)task responseData:(id)responseObject error:(NSError *)error {
     GDNetworkResponse *response = [GDNetworkResponse new];
+    
+    
     response.response = task.response;
     response.responseData = responseObject;
     response.error = error;
+    
     return response;
 }
 
@@ -203,5 +204,4 @@
 #pragma clang diagnostic pop
 
 @end
-
 

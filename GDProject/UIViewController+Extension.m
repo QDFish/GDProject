@@ -60,8 +60,34 @@ static NSString *kGDInteractionClassName;
     [self.gd_network createAndSendPageRequest];
 }
 
+- (void)loadDownForNewData {
+    [self.gd_interaction showLoading:YES];
+    self.gd_network.status = GDNetworkLoadStatusDownLoading;
+    [self.gd_network createAndSendPageRequest];
+}
+
+- (void)loadUpForMoreData {
+    [self.gd_interaction showLoading:YES];
+    self.gd_network.status = GDNetworkLoadStatusUpLoading;
+    [self.gd_network createAndSendPageRequest];
+}
+
+- (void)finishLoadWithResponse:(id)response {
+    [self.gd_interaction endRefreshing];
+    self.gd_network.status = GDNetworkLoadStatusDefalut;
+    [self dataOnUpdate];
+}
+
+- (void)dataOnUpdate {
+
+}
+
 - (GDNetworkLoadStatus)networkStatus {
     return self.gd_network.status;
+}
+
+- (NSString *)httpMethod {
+    return @"GET";
 }
 
 + (void)registerNetworkClass:(NSString *)className {
@@ -128,7 +154,7 @@ static NSString *kGDInteractionClassName;
 }
 
 - (BOOL)initialNetwork:(GDNetwork *)network {
-    return NO;
+    return YES;
 }
 
 - (BOOL)initialInteracetion:(GDInteraction *)interaction {
@@ -143,9 +169,65 @@ static NSString *kGDInteractionClassName;
     return nil;
 }
 
-- (void)finishLoadWithResponse:(id)response {
-    [self.gd_interaction showLoading:NO];
-    self.gd_network.status = GDNetworkLoadStatusDefalut;
+#pragma mark - datas
+
+- (NSMutableArray *)gd_datas {
+    NSMutableArray *datas = objc_getAssociatedObject(self, _cmd);
+    if (!datas) {
+        datas = [NSMutableArray array];
+        [datas addObject:self.gd_firstDatas];
+        self.gd_datas = datas;
+    }
+    
+    return datas;
 }
+
+- (void)setGd_datas:(NSMutableArray *)gd_datas {
+    objc_setAssociatedObject(self, @selector(gd_datas), gd_datas, OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSMutableArray *)gd_firstDatas {
+    NSMutableArray *datas = objc_getAssociatedObject(self, _cmd);
+    if (!datas) {
+        datas = [NSMutableArray array];
+        self.gd_firstDatas = datas;
+    }
+    
+    return datas;
+}
+
+- (void)setGd_firstDatas:(NSMutableArray *)gd_firstDatas {
+    objc_setAssociatedObject(self, @selector(gd_firstDatas), gd_firstDatas, OBJC_ASSOCIATION_RETAIN);
+}
+
+
+- (NSMutableArray *)gd_headerDatas {
+    NSMutableArray *datas = objc_getAssociatedObject(self, _cmd);
+    if (!datas) {
+        datas = [NSMutableArray array];
+        self.gd_headerDatas = datas;
+    }
+    
+    return datas;
+}
+
+- (void)setGd_headerDatas:(NSMutableArray *)gd_headerDatas {
+    objc_setAssociatedObject(self, @selector(gd_headerDatas), gd_headerDatas, OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSMutableArray *)gd_footerDatas {
+    NSMutableArray *datas = objc_getAssociatedObject(self, _cmd);
+    if (!datas) {
+        datas = [NSMutableArray array];        
+        self.gd_footerDatas = datas;
+    }
+    
+    return datas;
+}
+
+- (void)setGd_footerDatas:(NSMutableArray *)gd_footerDatas {
+    objc_setAssociatedObject(self, @selector(gd_footerDatas), gd_footerDatas, OBJC_ASSOCIATION_RETAIN);
+}
+
 
 @end

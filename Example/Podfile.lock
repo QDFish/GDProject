@@ -14,20 +14,38 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - GDProject (0.1.0):
     - AFNetworking
     - Masonry
+    - MJRefresh
     - "UITableView+FDTemplateLayoutCell"
+  - LKDBHelper (2.5.1):
+    - LKDBHelper/standard (= 2.5.1)
+  - LKDBHelper/standard (2.5.1):
+    - FMDB
   - Masonry (1.1.0)
+  - MJRefresh (3.1.15.7)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
   - "UITableView+FDTemplateLayoutCell (1.6)"
 
 DEPENDENCIES:
   - GDProject (from `../`)
+  - LKDBHelper
+  - SDWebImage
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - FMDB
+    - LKDBHelper
     - Masonry
+    - MJRefresh
+    - SDWebImage
     - "UITableView+FDTemplateLayoutCell"
 
 EXTERNAL SOURCES:
@@ -36,10 +54,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  GDProject: f0dc8b50bb173f3dc7f1c7bd1df3dd91ed52e414
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GDProject: 30b093f8151d260c2551c63e2ba2be82063d8b60
+  LKDBHelper: 9a276ba51f2e16263d46a9517e16cc9b03472664
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
 
-PODFILE CHECKSUM: 6e2891c5ebd864c6a004f0bc389ba7dca7d06272
+PODFILE CHECKSUM: 5b2811d99f232168cc7a22188080e77a3b043fec
 
 COCOAPODS: 1.5.3

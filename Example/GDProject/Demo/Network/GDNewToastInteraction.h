@@ -11,3 +11,5 @@
 @interface GDNewToastInteraction : GDMyInteraction
 
 @end
+
+

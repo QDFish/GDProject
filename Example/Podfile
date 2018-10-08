@@ -2,4 +2,6 @@ use_frameworks!
 
 target 'GDProject_Example' do
   pod 'GDProject', :path => '../'
+  pod 'LKDBHelper'
+  pod 'SDWebImage'
 end

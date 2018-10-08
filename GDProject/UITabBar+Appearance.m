@@ -38,9 +38,9 @@ static NSString *const kUITabBarButtonClassName = @"UITabBarButton";
     
     [tabbarBtns enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx < self.items.count / 2) {
-            obj.frame = CGRectMake(idx * itemWidth, 0, itemWidth, self.height);
+            obj.frame = CGRectMake(idx * itemWidth, 0, itemWidth, 49);
         } else {
-            obj.frame = CGRectMake(idx * itemWidth + self.gd_centerBtn.width, 0, itemWidth, self.height);
+            obj.frame = CGRectMake(idx * itemWidth + self.gd_centerBtn.width, 0, itemWidth, 49);
         }
     }];
     
