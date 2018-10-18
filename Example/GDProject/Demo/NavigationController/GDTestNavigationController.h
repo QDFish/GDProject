@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface GDNaVViewController : UIViewController
+@interface GDTestNavigationController : UIViewController
 
 @end

@@ -269,7 +269,7 @@ typedef void (^GDViewWillAppearNavigationHiddenBlock)(UIViewController *appearVC
 
 
 - (nullable NSArray<__kindof UIViewController *> *)gd_popToRootViewControllerAnimated:(BOOL)animated {
-    if (kGDPopUseScreenEnable) {
+    if (!kGDPopUseScreenEnable) {
         return [self gd_popToRootViewControllerAnimated:animated];
     }
     

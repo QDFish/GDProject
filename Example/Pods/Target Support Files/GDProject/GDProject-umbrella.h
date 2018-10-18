@@ -15,6 +15,8 @@
 #import "GDInteraction.h"
 #import "GDNetwork.h"
 #import "GDProject.h"
+#import "GDScrollNavigationController.h"
+#import "GDSliderViewController.h"
 #import "NSArray+GDExtension.h"
 #import "NSObject+Router.h"
 #import "NSObject+Swizzle.h"
@@ -26,6 +28,7 @@
 #import "UIView+Extension.h"
 #import "UIViewController+Extension.h"
 #import "UIViewController+GDCollectionView.h"
+#import "UIViewController+GDSliderSub.h"
 #import "UIViewController+GDTableView.h"
 
 FOUNDATION_EXPORT double GDProjectVersionNumber;

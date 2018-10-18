@@ -12,7 +12,7 @@
 #import <objc/runtime.h>
 
 NSString *const GDCollectionViewKindHeader = @"GDCollectionViewKindHeader";
-NSString *const GDCollectionViewKindFooter = @"GDCollectionViewKindFooterv";
+NSString *const GDCollectionViewKindFooter = @"GDCollectionViewKindFooter";
 
 
 @implementation UIViewController (GDCollectionView)
@@ -122,6 +122,7 @@ NSString *const GDCollectionViewKindFooter = @"GDCollectionViewKindFooterv";
         return nil;
     }
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     GD_SAFE_CALL_SEL(cell, @selector(setGd_collectionView:), collectionView);

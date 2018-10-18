@@ -61,9 +61,9 @@
                                                        uploadProgress:nil
                                                      downloadProgress:nil
                                                               success:^(NSURLSessionDataTask *task, id responseObj) {
-                                                                  GD_SAFE_CALL_SEL_MULTI_PARAMETERS(self.delegate, @selector(finishLoadWithResponse:), [self handleResponseWithTask:task responseData:responseObj error:nil]);
+                                                                  GD_SAFE_CALL_SEL_MULTI_PARAMETERS(self.delegate, @selector(callBackWithResponse:), [self handleResponseWithTask:task responseData:responseObj error:nil]);
                                                               } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                                  GD_SAFE_CALL_SEL_MULTI_PARAMETERS(self.delegate, @selector(finishLoadWithResponse:), [self handleResponseWithTask:task responseData:nil error:error]);
+                                                                  GD_SAFE_CALL_SEL_MULTI_PARAMETERS(self.delegate, @selector(callBackWithResponse:), [self handleResponseWithTask:task responseData:nil error:error]);
                                                               }];
     [task resume];
 }

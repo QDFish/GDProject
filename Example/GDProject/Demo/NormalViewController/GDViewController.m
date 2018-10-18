@@ -9,8 +9,7 @@
 #import "GDViewController.h"
 #import <GDProject/UIViewController+Extension.h>
 #import <Masonry/Masonry.h>
-
-#import "NSString+tmp.h"
+#import "GDSelectView.h"
 
 @interface GDViewController ()
 
@@ -21,19 +20,88 @@
 
 @implementation GDViewController
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [self initLoad];
+    
+    //开始进行页面的网络请求
+    [self createAndSendPageRequest];
+}
+
+
+#pragma mark - 网络相关
+
+- (NSString *)networkRequestURL {
+    return [GDUrlCenter normalPageUrl];    
+}
+
+- (NSString *)httpMethod {
+    return @"GET";
+}
+
+- (id)parameters {
+    return nil;
+}
+
+//网络成功的回调
+- (void)finishLoadWithResponse:(id)response {
+    GDNetworkResponse *myResponse = response;
+    if (myResponse.responseData) {
+        NSData *data = [NSJSONSerialization dataWithJSONObject:myResponse.responseData options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        _tipLab.text = dataStr;
+    }
+}
+
+#pragma mark - 初始化控制器的属性，通过interaction实现
+
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
+    //这边设置让导航栏隐藏的属性,以及控制器背景色为白色
+    GDMyInteraction *myInteraction = (GDMyInteraction *)interaction;
+    interaction.navigationBarHidden = YES;
+    myInteraction.backgroudColor = [UIColor whiteColor];
+    return YES;
+}
+
+- (BOOL)initialNetwork:(GDNetwork *)network {
+    return YES;
+}
+
+#pragma mark - init laod
+
+- (void)initLoad {
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGes];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    
+    UILabel *titleLab = [UILabel labelWithColor:[UIColor blackColor] font:14];
+    titleLab.textAlignment = NSTextAlignmentLeft;
+    titleLab.numberOfLines = 0;
+    titleLab.text = @"这是一个普通的控制器，UIViewController中我们加入网络的组件以及交互的组件，这边是用来测试这些组件，在输入框输入想要展示的消息或者想要跳转的控制器";
+    [self.view addSubview:titleLab];
+    
+    [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_topMargin).offset(16);
+        make.left.equalTo(self.view).offset(16);
+        make.right.equalTo(self.view).offset(-16);
+    }];
     
     _tipLab = [[UILabel alloc] init];
     _tipLab.textAlignment = NSTextAlignmentLeft;
     _tipLab.textColor = [UIColor blackColor];
     _tipLab.numberOfLines = 0;
     [self.view addSubview:_tipLab];
-
+    
     [_tipLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_topMargin);
+        make.top.equalTo(titleLab.mas_bottom).offset(4);
         make.left.equalTo(self.view);
     }];
     
@@ -68,11 +136,28 @@
     [showAlertBtn setTitle:@"showAlert" forState:UIControlStateNormal];
     [showAlertBtn addTarget:self action:@selector(showAlertAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:showAlertBtn];
-
+    
     [showAlertBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(showToastBtn);
         make.top.equalTo(showToastBtn.mas_bottom).offset(4);
     }];
+    
+    
+    GDSelectView *selectView = [GDSelectView new];
+    selectView.items = @[@"MyScrollNavigationController",
+                         @"dfasdfasdf",
+                         @"dddd"];
+    [self.view addSubview:selectView];
+    __weak typeof(self) weakSelf = self;
+    selectView.selectBlock = ^(NSString * _Nonnull title) {
+        weakSelf.msgField.text = title;
+    };
+    
+    [selectView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view.mas_rightMargin);
+        make.top.equalTo(showAlertBtn);
+    }];
+    
     
     UIButton *pushBtn = [[UIButton alloc] init];
     [pushBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -108,7 +193,7 @@
         make.left.equalTo(showEmptyBtn.mas_right).offset(4);
         make.top.equalTo(showEmptyBtn);
     }];
-
+    
     
     UIButton *showLineUppercase = [[UIButton alloc] init];
     [showLineUppercase setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -120,7 +205,7 @@
         make.left.equalTo(showEmptyBtn);
         make.top.equalTo(showEmptyBtn.mas_bottom).offset(4);
     }];
-
+    
     
     UIButton *showLineLowercase = [[UIButton alloc] init];
     [showLineLowercase setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -132,22 +217,9 @@
         make.left.equalTo(showLineUppercase.mas_right).offset(4);
         make.top.equalTo(showEmptyBtn.mas_bottom).offset(4);
     }];
-
-
-    
-    
-    [self createAndSendPageRequest];
 }
 
-- (void)finishLoadWithResponse:(id)response {
-    [super finishLoadWithResponse:response];
-    GDNetworkResponse *myResponse = response;
-    if (myResponse.responseData) {
-        NSData *data = [NSJSONSerialization dataWithJSONObject:myResponse.responseData options:NSJSONWritingPrettyPrinted error:nil];
-        NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        _tipLab.text = dataStr;
-    }
-}
+#pragma mark - action about
 
 - (void)showToastAction {
     [self.gd_interaction showToast:self.msgField.text];
@@ -185,29 +257,42 @@
     
 }
 
-- (void)showLineLowercaseAction {    
+- (void)showLineLowercaseAction {
     [self.gd_interaction showToast:self.msgField.text.addLineAndLowercase];
 }
 
-#pragma mark - network delegate
-
-- (NSString *)networkRequestURL {
-    return @"http://10.10.98.154/develop/NormalPageURL.php";
+- (void)dismissKeyboard {
+    [self.msgField resignFirstResponder];
 }
 
-- (NSString *)httpMethod {
-    return @"GET";
+#pragma mark - keyboard
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    //获取键盘的高度
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    CGRect keyboardRectInView = [GD_KEY_WINDOW convertRect:keyboardRect toView:self.view];
+    
+    CGFloat diff = 0;
+    if (keyboardRectInView.origin.y < self.msgField.bottom) {
+        diff = self.msgField.bottom - keyboardRectInView.origin.y;
+    }
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.view.top = -diff;
+                     } completion:nil];
 }
 
-#pragma mark -
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.view.top = 0;
+                     } completion:nil];
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
-    interaction.navigationBarHidden = YES;
-    return YES;
 }
 
-- (BOOL)initialNetwork:(GDNetwork *)network {
-    return YES;
-}
 
 @end

@@ -41,6 +41,12 @@
 - (void)prepareLayout {
     [super prepareLayout];
 
+    //滑动中屏蔽prepareLayout，否则大量计算下容易导致滑动掉帧
+    if (!self.collectionView.gd_needReCalculate) {
+        return;
+    }
+    self.collectionView.gd_needReCalculate = NO;
+    
     [self.gd_cellAttributes removeAllObjects];
     [self.gd_headerAttributes removeAllObjects];
     [self.gd_footerAttributes removeAllObjects];
@@ -77,11 +83,13 @@
                 headerClass = [UICollectionReusableView class];
             }
             
+            //手动计算可实现该协议，同样的，如果是定高则一定要使用该方法去返回高度，cell,footer同理
             CGFloat headerHeight = -1;
             if (headerClass && [headerClass respondsToSelector:@selector(collectionReuseViewHeightForItem:)]) {
                 headerHeight = [headerClass collectionReuseViewHeightForItem:headerData];
             }
             
+            //autolayout的自动算高
             if (headerHeight < 0) {
                 UICollectionReusableView *headerView = [self.collectionView gd_templateSupplementaryViewForReuseIdentifier:NSStringFromClass(headerClass) kind:GDCollectionViewKindHeader];
 #pragma clang diagnostic push
@@ -262,6 +270,10 @@
 
 - (CGSize)collectionViewContentSize {
     NSInteger numOfsections = [self.collectionView numberOfSections];
+    if (numOfsections <= 0 || numOfsections > self.gd_heightForSection.count) {
+        return CGSizeZero;
+    }
+    
     NSArray *lastSectionHeight = self.gd_heightForSection[numOfsections - 1];
     CGFloat maxHeight = 0;
     for (NSNumber *maxHeightNumber in lastSectionHeight) {

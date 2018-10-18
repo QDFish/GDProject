@@ -79,7 +79,7 @@
  @param interaction 组件实例，用来进行变量属性的修改
  @return 如果返回值为YES则控制器启用交互组件，NO为关闭组件，一个控制器生命周期只生效一次，默认关闭
  */
-- (BOOL)initialInteracetion:(GDInteraction *)interaction;
+- (BOOL)initialInteraction:(GDInteraction *)interaction;
 
 /**
  网络组件的初始化，在这里进行组件的变量属性控制来满足特殊交互的需求
@@ -109,7 +109,7 @@
 /**
  数据请求完成后调用
  */
-- (void)dataOnUpdate;
+- (void)finishLoadWithResponse:(id)response;
 
 
 @end

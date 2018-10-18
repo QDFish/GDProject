@@ -18,4 +18,5 @@
 #import "GDMyNetwork.h"
 #import "GDTabBarController.h"
 #import "GDMyInteraction.h"
+#import "GDUrlCenter.h"
 #endif

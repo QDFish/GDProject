@@ -1,8 +1,8 @@
 //
-//  TmpCollectionVC.h
+//  GDScrollNavTestTableSubVC.h
 //  GDProject_Example
 //
-//  Created by QDFish on 2018/9/29.
+//  Created by QDFish on 2018/10/13.
 //  Copyright © 2018年 QDFish. All rights reserved.
 //
 
@@ -10,11 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TmpCollectionVC : UIViewController
-
-
+@interface GDTableVC : UIViewController
 
 @end
-
 
 NS_ASSUME_NONNULL_END

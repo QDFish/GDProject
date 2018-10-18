@@ -12,6 +12,7 @@
 
 - (void)setCommonHeader {
     [self.manager.requestSerializer setValue:@"to" forHTTPHeaderField:@"TO"];
+    self.manager.requestSerializer.timeoutInterval = 6;
 }
 
 @end

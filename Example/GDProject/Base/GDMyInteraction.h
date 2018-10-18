@@ -13,10 +13,12 @@
 
 @property (nonatomic, assign) int page;
 @property (nonatomic, assign) int limit;
-@property (nonatomic, assign) int newCount;
+@property (nonatomic, assign) int newItemCount;
 @property (nonatomic, strong) UIColor *backgroudColor;
 
 - (void)showNoMoreData;
+
+- (void)dealInteractionWithResponse:(GDNetworkResponse *)response;
 
 @end
 
@@ -25,6 +27,13 @@
 
 @property (nonatomic, strong, readonly) GDMyInteraction *myInteraction;
 
+@end
 
+
+@interface NSObject (GDMySlider)
+
+@property (nonatomic, assign) NSInteger gd_page;
+@property (nonatomic, assign) NSInteger gd_newItemCount;
 
 @end
+

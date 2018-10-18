@@ -135,6 +135,7 @@
 - (void)viewDidLoad {
     if (self.vcType == GDViewControllerTypeTable) {
         self.vc.gd_tableView = [UITableView new];
+
         if (self.canPullDown) {
             __weak typeof(self) weakSelf = self;
             self.vc.gd_tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -169,7 +170,7 @@
     } else if (self.vcType == GDViewControllerTypeCollection) {
         GDCollectionViewLayout *layout = [GDCollectionViewLayout new];
         layout.gd_delegate = self.vc;
-        self.vc.gd_collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];        
+        self.vc.gd_collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         
         if (self.canPullDown) {
             __weak typeof(self) weakSelf = self;

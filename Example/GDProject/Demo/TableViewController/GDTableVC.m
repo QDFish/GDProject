@@ -1,32 +1,54 @@
 //
-//  GDTableViewController.m
+//  GDScrollNavTestTableSubVC.m
 //  GDProject_Example
 //
-//  Created by QDFish on 2018/9/10.
+//  Created by QDFish on 2018/10/13.
 //  Copyright © 2018年 QDFish. All rights reserved.
 //
 
-#import "GDTableViewController.h"
+#import "GDTableVC.h"
 #import "GDTableViewCell.h"
-#import <Masonry/Masonry.h>
-#import <MJRefresh/MJRefresh.h>
 
+@interface GDTableVC ()
 
-@interface GDTableViewController ()
-
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, copy) NSString *titleName;
 
 @end
 
-@implementation GDTableViewController
+@implementation GDTableVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];    
+    [super viewDidLoad];
     [self createAndSendPageRequest];
+    
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.gd_navigationScrollVC.navigationItem setTitle:self.titleName];
+    
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"%@ %s", self.class, __func__);
 }
 
 - (NSString *)networkRequestURL {
-    return [NSString stringWithFormat:@"http://10.10.98.198/develop/getMessages.php?limit=%d&page=%d", self.myInteraction.limit, self.myInteraction.page];
+    return [GDUrlCenter messageUrlWithPage:self.myInteraction.page limit:self.myInteraction.limit];
 }
 
 
@@ -38,24 +60,16 @@
     
     NSDictionary *datas = myResponse.responseData;
     
-    self.myInteraction.newCount = 0;
+    self.myInteraction.newItemCount = 0;
     for (NSDictionary *data in datas[@"data"]) {
         GDMessageData *messageData = [GDMessageData gd_modelWithJson:data];
         [self.gd_firstDatas addObject:messageData];
-        self.myInteraction.newCount++;
+        self.myInteraction.newItemCount++;
     }
     
     [self.gd_tableView reloadData];
     
-    [super finishLoadWithResponse:response];
-}
-
-- (void)dataOnUpdate {
-    if ([self.gd_firstDatas count] <= 0) {
-        [self.myInteraction showEmpty:YES];
-    } else if (self.myInteraction.newCount <= 0) {
-        [self.myInteraction showNoMoreData];
-    }
+    [self.myInteraction dealInteractionWithResponse:myResponse];
 }
 
 - (Class)gd_tableViewCellWithItem:(id)data {
@@ -71,7 +85,7 @@
     return YES;
 }
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
     interaction.vcType = GDViewControllerTypeTable;
     return YES;
 }
@@ -79,6 +93,5 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
-
 
 @end

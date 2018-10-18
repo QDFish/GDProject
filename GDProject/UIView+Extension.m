@@ -133,6 +133,14 @@
     return vc;
 }
 
+- (void)gd_removeAllSubviews {
+    while (self.subviews.count) {
+        UIView *child = self.subviews.lastObject;
+        [child removeFromSuperview];
+    }
+}
+
+
 @end
 
 @implementation UIButton (Extension)
@@ -166,6 +174,7 @@
     void (^tapBlock)(void) = objc_getAssociatedObject(self, @selector(setTapBlock:));
     tapBlock();
 }
+
 
 
 

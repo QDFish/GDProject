@@ -24,6 +24,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         self.messageLab = [UILabel labelWithColor:[UIColor blackColor] font:15];
         self.messageLab.numberOfLines = 2;
         self.messageLab.backgroundColor = [UIColor blueColor];
@@ -73,9 +76,6 @@
     }
     
     [self.img sd_setImageWithURL:[NSURL URLWithString:self.data.img]];
-    
-    CGFloat height = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    NSLog(@"%@ %f", self.data.message, height);
 }
 
 - (void)checkAction {    

@@ -25,13 +25,24 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSObject *data;
+    id data;
     if (indexPath.section < self.gd_datas.count) {
         if (indexPath.row < [self.gd_datas[indexPath.section] count]) {
             data = self.gd_datas[indexPath.section][indexPath.row];
         }
     }
+    
     Class cellClass = [self gd_tableViewCellWithItem:data];
+    
+    CGFloat height = -1;
+    if ([cellClass respondsToSelector:@selector(tableViewHeightForItem:)]) {
+        height = [cellClass tableViewHeightForItem:data];
+    }
+    if (height > 0) {
+        return height;
+    }
+    
+    
     NSString *cellClassName = NSStringFromClass(cellClass);
     
     NSMutableDictionary<NSString *, UITableViewCell *> *templateCellsByIdentifiers = objc_getAssociatedObject(tableView, @selector(fd_templateCellForReuseIdentifier:));
@@ -48,7 +59,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSObject *data;
+    id data;
     if (indexPath.section < self.gd_datas.count) {
         if (indexPath.row < [self.gd_datas[indexPath.section] count]) {
             data = self.gd_datas[indexPath.section][indexPath.row];
@@ -65,7 +76,7 @@
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     GD_SAFE_CALL_SEL(cell, @selector(setGd_tableView:), tableView);
     GD_SAFE_CALL_SEL(cell, @selector(setGd_data:), data);
-#pragma clang diagnostic popr
+#pragma clang diagnostic pop
     
     return cell;
 }
@@ -76,6 +87,14 @@
 #pragma mark -
 
 - (Class)gd_tableViewCellWithItem:(id)data {
+    return nil;
+}
+
+- (Class)gd_tableViewHeaderWithItem:(id)data {
+    return nil;
+}
+
+- (Class)gd_tableViewFooterWithItem:(id)data {
     return nil;
 }
 
@@ -123,6 +142,9 @@
     
 }
 
++ (CGFloat)tableViewHeightForItem:(id)item {
+    return -1;
+}
 
 @end
 

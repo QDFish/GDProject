@@ -24,5 +24,8 @@
 #import "UIViewController+Extension.h"
 #import "UIViewController+GDTableView.h"
 #import "UIViewController+GDCollectionView.h"
+#import "GDSliderViewController.h"
+#import "UIViewController+GDSliderSub.h"
+#import "GDScrollNavigationController.h"
 
 #endif /* GDProject_h */

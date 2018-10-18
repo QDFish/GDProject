@@ -7,9 +7,18 @@
 //
 
 #import "UICollectionView+Extension.h"
+#import "NSObject+Swizzle.h"
 #import <objc/runtime.h>
 
+
 @implementation UICollectionView (Extension)
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self exchangeInstanceMethodSEL:@selector(reloadData) replaceMethodSEL:@selector(gd_reloadData)];
+    });
+}
 
 - (__kindof UICollectionViewCell *)gd_templateCellForReuseIdentifier:(NSString *)identifier {
     NSAssert(identifier.length > 0, @"Expect a valid identifier - %@", identifier);
@@ -54,6 +63,52 @@
     }
     
     return templateView;
+}
+
+#pragma mark -
+
+- (void)setGd_needReCalculate:(BOOL)gd_needReCalculate {
+    objc_setAssociatedObject(self, @selector(gd_needReCalculate), [NSNumber numberWithBool:gd_needReCalculate], OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL)gd_needReCalculate {
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)gd_reloadData {
+    self.gd_needReCalculate = YES;
+    [self gd_reloadData];
+}
+
+- (void)gd_insertSections:(NSIndexSet *)sections {
+    
+}
+
+- (void)gd_deleteSections:(NSIndexSet *)sections {
+    
+}
+
+- (void)gd_reloadSections:(NSIndexSet *)sections {
+    
+}
+
+- (void)gd_moveSection:(NSInteger)section toSection:(NSInteger)newSection {
+    
+}
+
+- (void)gd_insertItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    
+}
+
+- (void)gd_deleteItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    
+}
+- (void)gd_reloadItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    
+}
+
+- (void)gd_moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    
 }
 
 @end

@@ -20,8 +20,8 @@
     self.title = @"new toast";
 }
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
-    BOOL work = [super initialInteracetion:interaction];
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
+    BOOL work = [super initialInteraction:interaction];
     interaction.navigationBarHidden = NO;
     return work;
 }

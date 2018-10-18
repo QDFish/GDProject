@@ -7,8 +7,11 @@
 //
 
 #import "GDTabBarController.h"
-#import "GDNaVViewController.h"
-#import "GDAutoLayoutVC.h"
+#import "GDTestNavigationController.h"
+#import "GDTableVC.h"
+#import "GDCollectionVC.h"
+#import "GDViewController.h"
+#import "MyScrollNavigationController.h"
 #import "TestViewController.h"
 
 @interface GDTabBarController ()
@@ -30,27 +33,41 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        GDNaVViewController *vc = [GDNaVViewController new];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-        UITabBarItem *navTabBarItem = [[UITabBarItem alloc] initWithTitle:@"导航" image:[[UIImage imageNamed:@"c_tabbar_mall_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_mall_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        nav.tabBarItem = navTabBarItem;
+        GDTestNavigationController *testNavVC = [GDTestNavigationController new];
+        UINavigationController *testNavNav = [[UINavigationController alloc] initWithRootViewController:testNavVC];
+        UITabBarItem *testNavItem = [[UITabBarItem alloc] initWithTitle:@"navigation" image:[[UIImage imageNamed:@"c_tabbar_mall_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_mall_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        testNavNav.tabBarItem = testNavItem;
         
-        GDAutoLayoutVC *layoutVC = [GDAutoLayoutVC new];
-        UITabBarItem *layoutTabBarItem = [[UITabBarItem alloc] initWithTitle:@"约束" image:[[UIImage imageNamed:@"c_tabbar_message_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_message_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        layoutTabBarItem.badgeValue = @"2";
-        layoutVC.tabBarItem = layoutTabBarItem;
+        GDViewController *normalVC = [GDViewController new];
+        UINavigationController *normalNav = [[UINavigationController alloc] initWithRootViewController:normalVC];
+        UITabBarItem *normalItem = [[UITabBarItem alloc] initWithTitle:@"normal" image:[[UIImage imageNamed:@"c_tabbar_message_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_message_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        normalNav.tabBarItem = normalItem;
+
         
+        GDTableVC *tableVC = [GDTableVC new];
+        UINavigationController *tableNav = [[UINavigationController alloc] initWithRootViewController:tableVC];
         
-        TestViewController *testVC = [TestViewController new];
-        UINavigationController *testNav = [[UINavigationController alloc] initWithRootViewController:testVC];
-        UITabBarItem *testTabBarItem = [[UITabBarItem alloc] initWithTitle:@"测试" image:[[UIImage imageNamed:@"c_tabbar_video_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_video_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        testNav.tabBarItem = testTabBarItem;
+        UITabBarItem *tableItem = [[UITabBarItem alloc] initWithTitle:@"table" image:[[UIImage imageNamed:@"c_tabbar_message_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_message_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        tableItem.badgeValue = @"2";
+        tableNav.tabBarItem = tableItem;
+        
+        GDCollectionVC *collectionVC = [GDCollectionVC new];
+        UINavigationController *collectionNav = [[UINavigationController alloc] initWithRootViewController:collectionVC];
+        UITabBarItem *collectionItem = [[UITabBarItem alloc] initWithTitle:@"collection" image:[[UIImage imageNamed:@"c_tabbar_video_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_video_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        collectionNav.tabBarItem = collectionItem;
+
+
+        
+        MyScrollNavigationController *scrollNavC = [MyScrollNavigationController new];
+        UINavigationController *scrollNavNav = [[UINavigationController alloc] initWithRootViewController:scrollNavC];
+        UITabBarItem *scrollNavItem = [[UITabBarItem alloc] initWithTitle:@"ScrollNav" image:[[UIImage imageNamed:@"c_tabbar_mall_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_mall_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        scrollNavNav.tabBarItem = scrollNavItem;
         
         UIButton *centerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, -30, 60, 60)];
 //        centerBtn.hidden = YES;
         [centerBtn setImage:[UIImage imageNamed:@"c_tabbar_post"] forState:UIControlStateNormal];
         
-        self.viewControllers = @[nav, layoutVC, testNav];
+        self.viewControllers = @[testNavNav, normalNav, tableNav, collectionNav, scrollNavNav];
         self.tabBar.gd_centerBtn = centerBtn;
         self.tabBar.gd_centerAction = ^{
             NSLog(@"gd_centerAction");

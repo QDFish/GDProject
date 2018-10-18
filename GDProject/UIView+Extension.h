@@ -23,6 +23,9 @@
 
 @property (nonatomic, assign) UIEdgeInsets gd_alignmentRectInsets;
 
+- (void)gd_removeAllSubviews;
+
+
 @end
 
 @interface UILabel (Extension)

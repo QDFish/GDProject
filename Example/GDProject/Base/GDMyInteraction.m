@@ -162,11 +162,12 @@
         label.text = @"这是错误页面";
         [_errorView addSubview:label];
         
-        UIButton *btn = [UIButton buttonWithTitle:@"remove" TitleColor:[UIColor blackColor] font:15];
+        UIButton *btn = [UIButton buttonWithTitle:@"reload" TitleColor:[UIColor blackColor] font:15];
         __weak typeof(self) weakSelf = self;
         [btn setTapBlock:^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf showError:NO];
+            [strongSelf.vc createAndSendPageRequest];
         }];
         [_errorView addSubview:btn];
         
@@ -270,12 +271,30 @@
     }
 }
 
+- (void)dealInteractionWithResponse:(GDNetworkResponse *)response {    
+    if (response.error) {
+        [self showError:YES];
+        return;
+    }
+    [self showError:NO];
+    
+    if ([self.vc.gd_firstDatas count] <= 0) {
+        [self showEmpty:YES];
+        return;
+    }
+    [self showEmpty:NO];
+    
+    if (self.newItemCount <= 0) {
+        [self showNoMoreData];
+    }
+}
+
 - (void)prepareForPullDownLoad {
     self.page = 1;
 }
 
 - (void)prepareForPullUpLoad {
-    self.page++;
+    self.page++;    
 }
 
 @end
@@ -284,6 +303,27 @@
 
 - (GDMyInteraction *)myInteraction {
     return (GDMyInteraction *)self.gd_interaction;
+}
+
+
+@end
+
+@implementation NSObject (GDMySlider)
+
+- (void)setGd_page:(NSInteger)gd_page {
+    objc_setAssociatedObject(self, @selector(gd_page), [NSNumber numberWithInteger:gd_page], OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSInteger)gd_page {
+    return [objc_getAssociatedObject(self, _cmd) intValue];
+}
+
+- (void)setGd_newItemCount:(NSInteger)gd_newItemCount {
+    objc_setAssociatedObject(self, @selector(gd_newItemCount), [NSNumber numberWithInteger:gd_newItemCount], OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSInteger)gd_newItemCount {
+    return [objc_getAssociatedObject(self, _cmd) intValue];
 }
 
 

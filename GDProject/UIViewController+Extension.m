@@ -72,13 +72,13 @@ static NSString *kGDInteractionClassName;
     [self.gd_network createAndSendPageRequest];
 }
 
-- (void)finishLoadWithResponse:(id)response {
+- (void)callBackWithResponse:(id)response {
+    [self finishLoadWithResponse:response];
     [self.gd_interaction endRefreshing];
-    self.gd_network.status = GDNetworkLoadStatusDefalut;
-    [self dataOnUpdate];
+    self.gd_network.status = GDNetworkLoadStatusDefalut;    
 }
 
-- (void)dataOnUpdate {
+- (void)finishLoadWithResponse:(id)response {
 
 }
 
@@ -133,7 +133,7 @@ static NSString *kGDInteractionClassName;
 }
 
 - (GDInteraction *)gd_interaction {
-    if (![self initialInteracetion:nil]) return nil;
+    if (![self initialInteraction:nil]) return nil;
     GDInteraction *interaction = objc_getAssociatedObject(self, _cmd);
     if (!interaction) {
         NSString *className;
@@ -146,7 +146,7 @@ static NSString *kGDInteractionClassName;
         }
         
         interaction = [[NSClassFromString(className) alloc] initWithViewContoller:self];
-        [self initialInteracetion:interaction];
+        [self initialInteraction:interaction];
         objc_setAssociatedObject(self, _cmd, interaction, OBJC_ASSOCIATION_RETAIN);
     }
     
@@ -157,7 +157,7 @@ static NSString *kGDInteractionClassName;
     return YES;
 }
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
     return NO;
 }
 

@@ -63,7 +63,7 @@ typedef NS_OPTIONS(NSInteger, GDNetworkLoadStatus) {
 
  @param response 回调响应的结果，对接于AF框架
  */
-- (void)finishLoadWithResponse:(nonnull id)response;
+- (void)callBackWithResponse:(nonnull id)response;
 
 @end
 

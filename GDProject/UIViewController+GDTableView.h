@@ -58,6 +58,8 @@
  */
 - (void)setWithData:(NSObject *)data;
 
++ (CGFloat)tableViewHeightForItem:(id)item;
+
 @end
 
 @interface NSObject (tableViewCell)

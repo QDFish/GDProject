@@ -161,11 +161,15 @@
 @implementation NSObject (GDModel)
 
 + (instancetype)gd_modelWithJson:(NSDictionary *)dict {
-    id model = [self new];
-    
+    id model = [[self alloc] init];
+    [model gd_setModelWithJson:dict];
+    return model;
+}
+
+- (void)gd_setModelWithJson:(NSDictionary *)dict {
     NSMutableArray *attributes = [NSMutableArray array];
     unsigned int outCount;
-    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
+    objc_property_t *propertys = class_copyPropertyList(self.class, &outCount);
     for (int i = 0; i < outCount; i++) {
         objc_property_t property = propertys[i];
         NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
@@ -179,10 +183,8 @@
             continue;
         }
         
-        [model gd_setValueWithJson:dict forProperty:property];
+        [self gd_setValueWithJson:dict forProperty:property];
     }
-        
-    return model;
 }
 
 - (NSDictionary *)gd_json {

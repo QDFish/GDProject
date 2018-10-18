@@ -72,11 +72,13 @@
     [self testAutoLayout];
 //    [self testRegular];
     
+//    [self testAutoRelease];
+    
+    
+    
 }
 
-- (CGFloat)hhh {
-    return 1.2;
-}
+
 
 - (void)testAutoLayout {
     UIView *outView = [UIView new];
@@ -359,7 +361,7 @@
     }
 }
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
     return YES;
 }
 

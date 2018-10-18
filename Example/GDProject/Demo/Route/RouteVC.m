@@ -46,7 +46,7 @@
     _title1 = title1;
 }
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
     return YES;
 }
 

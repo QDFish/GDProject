@@ -1,33 +1,32 @@
 //
-//  TmpCollectionVC.m
+//  GDScrollNavTestScrollSubVC.m
 //  GDProject_Example
 //
-//  Created by QDFish on 2018/9/29.
+//  Created by QDFish on 2018/10/13.
 //  Copyright © 2018年 QDFish. All rights reserved.
 //
 
-#import "TmpCollectionVC.h"
+#import "GDCollectionVC.h"
 #import "GDTableViewCell.h"
 #import "GDCollectionViewCell.h"
-#import "GDCollectionFooter.h"
 #import "GDCollectionHeader.h"
-#import <objc/runtime.h>
+#import "GDCollectionFooter.h"
 
-@interface TmpCollectionVC () <UICollectionViewDataSource>
+@interface GDCollectionVC ()
 
+@property (nonatomic, copy) NSString *titleName;
 @property (nonatomic, strong) NSMutableArray *secondDatas;
+
 
 @end
 
-@implementation TmpCollectionVC
+@implementation GDCollectionVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.secondDatas = [NSMutableArray array];
     [self.gd_datas addObject:self.secondDatas];
-    
-    [self createAndSendPageRequest];
     
     GDMessageData *headerData = [GDMessageData new];
     headerData.message = @"我是头部1";
@@ -44,42 +43,74 @@
     footerData = [GDMessageData new];
     footerData.message = @"我是尾部2";
     [self.gd_footerDatas addObject:footerData];
+    
+    [self createAndSendPageRequest];
+    
+    NSLog(@"%@ %s", self.class, __func__);
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.gd_navigationScrollVC.navigationItem setTitle:self.titleName];    
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSLog(@"%@ %s", self.class, __func__);
+}
+
+
 - (NSString *)networkRequestURL {
-    return [NSString stringWithFormat:@"http://192.168.2.106/develop/getMessages.php?limit=%d&page=%d", self.myInteraction.limit, self.myInteraction.page];
+    return [GDUrlCenter messageUrlWithPage:self.myInteraction.page limit:self.myInteraction.limit];    
 }
 
 - (void)finishLoadWithResponse:(id)response {
     GDNetworkResponse *myResponse = response;
     if (self.networkStatus != GDNetworkLoadStatusUpLoading) {
         [self.gd_firstDatas removeAllObjects];
+        [self.secondDatas removeAllObjects];
     }
     
     NSDictionary *datas = myResponse.responseData;
     
-    self.myInteraction.newCount = 0;
+    self.myInteraction.newItemCount = 0;
     for (NSDictionary *data in datas[@"data"]) {
         GDMessageData *messageData = [GDMessageData gd_modelWithJson:data];
-        
         if (messageData.idx > 30) {
             [self.secondDatas addObject:messageData];
         } else {
             [self.gd_firstDatas addObject:messageData];
         }
-        
-        self.myInteraction.newCount++;
+        self.myInteraction.newItemCount++;
     }
-    
     [self.gd_collectionView reloadData];
     
-    [super finishLoadWithResponse:response];
-}
-
-- (void)dataOnUpdate {
-    if ([self.gd_firstDatas count] <= 0) {
+    if (myResponse.error) {
+        [self.myInteraction showError:YES];
+        return;
+    }
+    [self.myInteraction showError:NO];
+    
+    if ([self.gd_firstDatas count] == 0 && [self.secondDatas count] == 0) {
         [self.myInteraction showEmpty:YES];
-    } else if (self.myInteraction.newCount <= 0) {
+        return;
+    }
+    [self.myInteraction showEmpty:NO];
+    
+    if (self.myInteraction.newItemCount <= 0) {
         [self.myInteraction showNoMoreData];
     }
 }
@@ -88,7 +119,7 @@
     return YES;
 }
 
-- (BOOL)initialInteracetion:(GDInteraction *)interaction {
+- (BOOL)initialInteraction:(GDInteraction *)interaction {
     interaction.vcType = GDViewControllerTypeCollection;
     return YES;
 }
@@ -135,7 +166,7 @@
     }
     
     return 0;
-
+    
 }
 
 - (CGFloat)ySpacingWithSection:(NSInteger)section {
@@ -145,5 +176,7 @@
     
     return 0;
 }
+
+
 
 @end

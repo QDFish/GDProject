@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, GDModelKeyTransform) {
  */
 + (instancetype)gd_modelWithJson:(NSDictionary *)dict;
 
+- (void)gd_setModelWithJson:(NSDictionary *)dict;
 
 /**
  实例转字典
