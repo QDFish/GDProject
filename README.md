@@ -16,16 +16,13 @@
 
 4、快速开发tableView，collectionView相关的控制器，cell具有手动算高，定高，自动算高功能（FD），简化代理
 
+详情使用见DEMO
+
 ## Requirements
 
 ## Installation
 
-GDProject is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'GDProject'
-```
+由于未经过深度实践，暂不制作pop
 
 ## Author
 
