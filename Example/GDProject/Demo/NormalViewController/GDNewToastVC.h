@@ -8,6 +8,10 @@
 
 #import "GDViewController.h"
 
+
+/**
+ 如果通用的交互控件无法满足特殊的要求，可以自定义一个特殊的控件
+ */
 @interface GDNewToastVC : GDViewController
 
 @end

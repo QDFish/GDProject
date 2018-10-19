@@ -8,6 +8,10 @@
 
 @import UIKit;
 
+
+/**
+ 测试所有替换的pop，push方法
+ */
 @interface GDTestNavigationController : UIViewController
 
 @end

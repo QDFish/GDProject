@@ -10,6 +10,7 @@
 
 @implementation GDMyNetwork
 
+//这边初始化整个app的网络设置
 - (void)setCommonHeader {
     [self.manager.requestSerializer setValue:@"to" forHTTPHeaderField:@"TO"];
     self.manager.requestSerializer.timeoutInterval = 6;

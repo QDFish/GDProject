@@ -114,7 +114,7 @@
     UIView *contentView = self.subVCContentViews[idx];
     vc = [vcClass new];
     vc.gd_navigationScrollVC = self;
-    [vc gd_setModelWithJson:[item gd_json]];
+    [vc gd_setModelWithParameters:[item gd_parameters]];
     [contentView addSubview:vc.view];
     vc.view.frame = CGRectMake(0, 0, self.gd_scrollView.width, self.gd_scrollView.height);
     [self setSubVC:vc withIndex:idx];
@@ -151,6 +151,10 @@
 }
 
 #pragma mark -
+
+- (CGRect)gd_navScrollViewFrame {
+    return CGRectMake(0, 0, self.view.width, self.view.height);
+}
 
 - (NSArray *)gd_navSubItems {
     return nil;

@@ -110,16 +110,30 @@ typedef NS_ENUM(NSInteger, GDViewControllerType) {
 
 
 /**
- 下拉刷新请求之前的准备
+ 下拉刷新请求之前的准备（基类未实现）
  */
 - (void)prepareForPullDownLoad;
 
 
 /**
- 上拉加载请求之前的准备
+ 上拉加载请求之前的准备（基类未实现）
  */
 - (void)prepareForPullUpLoad;
 
+
+/**
+ 返回刷新控件头部，该类型需要为MJRefreshHeader的子类
+ 用于下拉刷新
+ @return .
+ */
++ (Class)refreshHeaderClass;
+
+/**
+ 返回刷新控件尾部，该类型需要为MJRefreshFooter的子类
+ 用于上拉加载
+ @return .
+ */
++ (Class)refreshFooterClass;
 
 @end
 

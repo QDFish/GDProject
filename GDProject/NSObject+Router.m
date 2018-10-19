@@ -57,22 +57,13 @@
     return [self performSelector:aSelector withObjects:arguments];
 }
 
-+ (void)pushWithParameters:(NSDictionary *)parameters animated:(BOOL)animated hiddenBottomBar:(BOOL)hidden{
-    UIViewController *currentVC = [self currentViewController];
-    
-    NSArray *allVar = [self _allVar];
-    
++ (void)pushWithParameters:(NSDictionary *)parameters animated:(BOOL)animated hiddenBottomBar:(BOOL)hidden{        
     UIViewController *toVC = [[self alloc] init];
     if (![toVC isKindOfClass:[UIViewController class]]) {
         return;
     }
-    
-    [parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([key isKindOfClass:[NSString class]] && [allVar containsObject:key]) {
-            [toVC setValue:obj forKey:key];
-        }
-    }];
-    
+    UIViewController *currentVC = [self currentViewController];
+    [currentVC gd_setModelWithParameters:parameters];
     toVC.hidesBottomBarWhenPushed = hidden;
     [currentVC.navigationController pushViewController:toVC animated:animated];
 }
@@ -100,6 +91,8 @@
     return currentVC;
 }
 
+#pragma mark -
+
 + (UIViewController *)_topViewController:(UIViewController *)currentVC {
     if ([currentVC isKindOfClass:[UINavigationController class]]) {
         return [self _topViewController:((UINavigationController *)currentVC).topViewController];
@@ -110,49 +103,35 @@
     return currentVC;
 }
 
-+ (NSArray<NSString *> *)_allVar {
-    NSMutableArray *allVar = [NSMutableArray array];
-    
-    uint outCount;
-    Ivar *varList = class_copyIvarList(self, &outCount);
-    for (NSInteger i = 0; i < outCount; i++) {
-        Ivar var = varList[i];
-        NSMutableString *varName = [NSMutableString stringWithUTF8String:ivar_getName(var)];
-        [varName deleteCharactersInRange:NSMakeRange(0, 1)];
-        [allVar addObject:varName];
-    }
-    
-    return allVar;
-}
 
-+ (void)validProperty {
-    
-    NSMutableArray *attributes = [NSMutableArray array];
-    unsigned int outCount;
-    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
-    for (int i = 0; i < outCount; i++) {
-        objc_property_t property = propertys[i];
-        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
-        [attributes addObject:[propertyAttribute componentsSeparatedByString:@","]];
-    }
-    
-//    NSMutableArray *propertys = [NSMutableArray array];
-    for (NSArray *attribute in attributes) {
-        GDProperty *property = [GDProperty modelWithAttribute:attribute];
-        NSLog(@"%@", property);
-    }
-}
-
-+ (void)logAllProperty {
-    unsigned int outCount;
-    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
-    for (int i = 0; i < outCount; i++) {
-        objc_property_t property = propertys[i];
-        NSString *propertyName = [NSString stringWithUTF8String:property_getName(property)];
-        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
-        NSLog(@"propertyName:%@ propertyAttribute:%@", propertyName, propertyAttribute);
-    }
-}
+//+ (void)validProperty {
+//
+//    NSMutableArray *attributes = [NSMutableArray array];
+//    unsigned int outCount;
+//    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
+//    for (int i = 0; i < outCount; i++) {
+//        objc_property_t property = propertys[i];
+//        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+//        [attributes addObject:[propertyAttribute componentsSeparatedByString:@","]];
+//    }
+//
+////    NSMutableArray *propertys = [NSMutableArray array];
+//    for (NSArray *attribute in attributes) {
+//        GDProperty *property = [GDProperty modelWithAttribute:attribute];
+//        NSLog(@"%@", property);
+//    }
+//}
+//
+//+ (void)logAllProperty {
+//    unsigned int outCount;
+//    objc_property_t *propertys = class_copyPropertyList(self, &outCount);
+//    for (int i = 0; i < outCount; i++) {
+//        objc_property_t property = propertys[i];
+//        NSString *propertyName = [NSString stringWithUTF8String:property_getName(property)];
+//        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+//        NSLog(@"propertyName:%@ propertyAttribute:%@", propertyName, propertyAttribute);
+//    }
+//}
 
 
 
@@ -241,6 +220,57 @@
     return json;
 }
 
+- (void)gd_setModelWithParameters:(NSDictionary *)dict {
+    NSArray *allVar = [self _allVar];
+    
+    [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([key isKindOfClass:[NSString class]] && [allVar containsObject:key]) {
+            [self setValue:obj forKey:key];
+        }
+    }];
+}
+
+- (NSDictionary *)gd_parameters {
+    NSMutableArray *attributes = [NSMutableArray array];
+    NSMutableDictionary *paramters = [NSMutableDictionary dictionary];
+    unsigned int outCount;
+    objc_property_t *propertys = class_copyPropertyList(self.class, &outCount);
+    for (int i = 0; i < outCount; i++) {
+        objc_property_t property = propertys[i];
+        NSString *propertyAttribute = [NSString stringWithUTF8String:property_getAttributes(property)];
+        [attributes addObject:[propertyAttribute componentsSeparatedByString:@","]];
+    }
+    
+    for (NSArray *attribute in attributes) {
+        GDProperty *property = [GDProperty modelWithAttribute:attribute];
+        
+        if (property.readonly) {
+            continue;
+        }
+        
+        [paramters setValue:[self valueForKey:property.name] forKey:property.name];
+    }
+    
+    return paramters;
+}
+
+- (NSArray<NSString *> *)_allVar {
+    NSMutableArray *allVar = [NSMutableArray array];
+    
+    uint outCount;
+    Ivar *varList = class_copyIvarList(self.class, &outCount);
+    for (NSInteger i = 0; i < outCount; i++) {
+        Ivar var = varList[i];
+        NSMutableString *varName = [NSMutableString stringWithUTF8String:ivar_getName(var)];
+        [varName deleteCharactersInRange:NSMakeRange(0, 1)];
+        [allVar addObject:varName];
+    }
+    
+    return allVar;
+}
+
+
+#pragma mark -
 
 
 - (void)gd_setValueWithJson:(NSDictionary *)dict forProperty:(GDProperty *)property {

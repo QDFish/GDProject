@@ -33,6 +33,15 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        //在tabbar加入一个中间btn，直接设置frame，x参数无效，始终置于所有tabItem的中间(count / 2);
+        UIButton *centerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, -30, 60, 60)];
+        [centerBtn setImage:[UIImage imageNamed:@"c_tabbar_post"] forState:UIControlStateNormal];
+        self.tabBar.gd_centerBtn = centerBtn;
+        self.tabBar.gd_centerAction = ^{
+            NSLog(@"gd_centerAction");
+        };
+
+        
         GDTestNavigationController *testNavVC = [GDTestNavigationController new];
         UINavigationController *testNavNav = [[UINavigationController alloc] initWithRootViewController:testNavVC];
         UITabBarItem *testNavItem = [[UITabBarItem alloc] initWithTitle:@"navigation" image:[[UIImage imageNamed:@"c_tabbar_mall_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_mall_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -57,21 +66,13 @@
         collectionNav.tabBarItem = collectionItem;
 
 
-        
         MyScrollNavigationController *scrollNavC = [MyScrollNavigationController new];
         UINavigationController *scrollNavNav = [[UINavigationController alloc] initWithRootViewController:scrollNavC];
         UITabBarItem *scrollNavItem = [[UITabBarItem alloc] initWithTitle:@"ScrollNav" image:[[UIImage imageNamed:@"c_tabbar_mall_nor"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"c_tabbar_mall_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         scrollNavNav.tabBarItem = scrollNavItem;
-        
-        UIButton *centerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, -30, 60, 60)];
-//        centerBtn.hidden = YES;
-        [centerBtn setImage:[UIImage imageNamed:@"c_tabbar_post"] forState:UIControlStateNormal];
-        
         self.viewControllers = @[testNavNav, normalNav, tableNav, collectionNav, scrollNavNav];
-        self.tabBar.gd_centerBtn = centerBtn;
-        self.tabBar.gd_centerAction = ^{
-            NSLog(@"gd_centerAction");
-        };
+        
+        
     }
     
     return self;

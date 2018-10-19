@@ -145,8 +145,9 @@
     
     GDSelectView *selectView = [GDSelectView new];
     selectView.items = @[@"MyScrollNavigationController",
-                         @"dfasdfasdf",
-                         @"dddd"];
+                         @"TestViewController",
+                         @"GDNewToastVC",
+                         @"这是消息"];
     [self.view addSubview:selectView];
     __weak typeof(self) weakSelf = self;
     selectView.selectBlock = ^(NSString * _Nonnull title) {
@@ -217,6 +218,8 @@
         make.left.equalTo(showLineUppercase.mas_right).offset(4);
         make.top.equalTo(showEmptyBtn.mas_bottom).offset(4);
     }];
+    
+    [self.view bringSubviewToFront:selectView];
 }
 
 #pragma mark - action about

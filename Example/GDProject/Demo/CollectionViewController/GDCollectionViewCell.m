@@ -58,6 +58,11 @@
     [self.img sd_setImageWithURL:[NSURL URLWithString:self.data.img]];
 }
 
+//如果你需要手动算高或者固定高度，在这边进行回调，默认基类返回-1，代表使用约束自动算高
+//+ (CGFloat)collectionReuseViewHeightForItem:(id)item {
+//    return -1;
+//}
+
 - (GDMessageData *)data {
     return (GDMessageData *)self.gd_data;
 }

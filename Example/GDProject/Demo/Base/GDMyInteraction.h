@@ -9,8 +9,15 @@
 #import <GDProject/GDProject.h>
 
 
+/**
+ 继承GDInteraction初始化自定义的交互组件
+ */
 @interface GDMyInteraction : GDInteraction
 
+
+/**
+ 这里选择page的方式去加载分页的服务端数据
+ */
 @property (nonatomic, assign) int page;
 @property (nonatomic, assign) int limit;
 @property (nonatomic, assign) int newItemCount;
@@ -25,15 +32,11 @@
 
 @interface UIViewController (GDMyInteraction)
 
+
+/**
+ 为了不用频繁的强转数据可以使用分类的方式
+ */
 @property (nonatomic, strong, readonly) GDMyInteraction *myInteraction;
-
-@end
-
-
-@interface NSObject (GDMySlider)
-
-@property (nonatomic, assign) NSInteger gd_page;
-@property (nonatomic, assign) NSInteger gd_newItemCount;
 
 @end
 

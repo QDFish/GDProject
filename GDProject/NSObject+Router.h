@@ -85,6 +85,22 @@ typedef NS_ENUM(NSInteger, GDModelKeyTransform) {
  */
 - (NSDictionary *)gd_json;
 
+
+/**
+ 与转json不同，这只是一个参数的赋值方法
+
+ @param dict 参数集
+ */
+- (void)gd_setModelWithParameters:(NSDictionary *)dict;
+
+
+/**
+ 实例转参数
+
+ @return 返回一个根据NSObject类型变量返回的参数集合
+ */
+- (NSDictionary *)gd_parameters;
+
 @end
 
 

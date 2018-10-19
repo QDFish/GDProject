@@ -21,6 +21,7 @@
 
 @implementation GDTableViewCell
 
+//做好contentView即可自动算高，使用了FD的框架
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -63,9 +64,8 @@
     return self;
 }
 
-
+//对相关控件赋值
 - (void)setWithData:(NSObject *)data {
-    
     self.messageLab.text = self.data.message;
     if (self.data.isTotal) {
         self.messageLab.numberOfLines = 0;
@@ -78,26 +78,32 @@
     [self.img sd_setImageWithURL:[NSURL URLWithString:self.data.img]];
 }
 
+//如果你需要手动算高或者固定高度，在这边进行回调，默认基类返回-1，代表使用约束自动算高
+//+ (CGFloat)tableViewHeightForItem:(id)item {
+//    return -1;
+//}
+
 - (void)checkAction {    
     self.data.isTotal = !self.data.isTotal;
-//    self.data.needRefresh = YES;
     if (self.gd_indexPath) {
         [UIView performWithoutAnimation:^{
             [self.gd_tableView reloadRowsAtIndexPaths:@[self.gd_indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
-    
-//    [self.gd_tableView reloadRowsAtIndexPaths:<#(nonnull NSArray<NSIndexPath *> *)#> withRowAnimation:(UITableViewRowAnimation)]
 }
 
+//为了方便转换数据类型的方法
 - (GDMessageData *)data {
     return (GDMessageData *)self.gd_data;
 }
+
+
 
 @end
 
 @implementation GDMessageData
 
+//这边将重复赋值cell的开关打开，默认关闭，即数据不改变，内容不刷新
 - (BOOL)gd_cellNeedRefresh {
     return YES;
 }

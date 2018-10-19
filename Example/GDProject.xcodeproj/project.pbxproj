@@ -33,11 +33,8 @@
 		4FBFBC652133A927003618F3 /* c_tabbar_post60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFBC532133A926003618F3 /* c_tabbar_post60@2x.png */; };
 		4FBFBC662133A927003618F3 /* c_tabbar_mall_nor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFBC542133A926003618F3 /* c_tabbar_mall_nor@3x.png */; };
 		4FBFBC672133A927003618F3 /* c_tabbar_post60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFBC552133A927003618F3 /* c_tabbar_post60@3x.png */; };
-		4FBFBC70213429CA003618F3 /* GDTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFBC6F213429CA003618F3 /* GDTabBarController.m */; };
 		4FD1A7802146BB920005FCA2 /* GDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1A77F2146BB920005FCA2 /* GDTableViewCell.m */; };
 		4FDF3F592137D8FE00B8F1C9 /* GDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDF3F582137D8FE00B8F1C9 /* GDViewController.m */; };
-		4FDF3F5C2137D91800B8F1C9 /* GDMyNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDF3F5B2137D91800B8F1C9 /* GDMyNetwork.m */; };
-		4FDF3F6C21382EC500B8F1C9 /* GDMyInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDF3F6B21382EC500B8F1C9 /* GDMyInteraction.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -49,14 +46,17 @@
 		79D7220CD9F1A0ACA6371DC1 /* Pods_GDProject_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A460DA63704E6C57315A8F6 /* Pods_GDProject_Example.framework */; };
 		E525249B216E263600B7CCE7 /* GDMySliderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E525249A216E263600B7CCE7 /* GDMySliderVC.m */; };
 		E525249E216E3E1A00B7CCE7 /* GDMySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = E525249D216E3E1A00B7CCE7 /* GDMySlider.m */; };
+		E53CC8722179B8C1008B1FB1 /* GDMyNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = E53CC86B2179B8C0008B1FB1 /* GDMyNetwork.m */; };
+		E53CC8732179B8C1008B1FB1 /* GDUrlCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E53CC86F2179B8C0008B1FB1 /* GDUrlCenter.m */; };
+		E53CC8742179B8C1008B1FB1 /* GDTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E53CC8712179B8C0008B1FB1 /* GDTabBarController.m */; };
 		E5461428217193DD00B4DCD3 /* MyScrollNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5461427217193DD00B4DCD3 /* MyScrollNavigationController.m */; };
 		E546142B217195D600B4DCD3 /* GDTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E546142A217195D600B4DCD3 /* GDTableVC.m */; };
 		E546142E217195EC00B4DCD3 /* GDCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E546142D217195EC00B4DCD3 /* GDCollectionVC.m */; };
 		E54614312171A38400B4DCD3 /* GDSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = E54614302171A38400B4DCD3 /* GDSelectView.m */; };
-		E5835FF2217623B000F0DC7F /* GDUrlCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E5835FF1217623B000F0DC7F /* GDUrlCenter.m */; };
 		E58E805E216A3EFA00899A80 /* GDCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E58E805D216A3EFA00899A80 /* GDCollectionViewCell.m */; };
 		E58E8074216B517200899A80 /* GDCollectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E58E8073216B517200899A80 /* GDCollectionHeader.m */; };
 		E58E8077216B518800899A80 /* GDCollectionFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = E58E8076216B518800899A80 /* GDCollectionFooter.m */; };
+		E5BCB0272179BA3B00EA41DD /* GDMyInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BCB0262179BA3A00EA41DD /* GDMyInteraction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,16 +95,10 @@
 		4FBFBC532133A926003618F3 /* c_tabbar_post60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_tabbar_post60@2x.png"; sourceTree = "<group>"; };
 		4FBFBC542133A926003618F3 /* c_tabbar_mall_nor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_tabbar_mall_nor@3x.png"; sourceTree = "<group>"; };
 		4FBFBC552133A927003618F3 /* c_tabbar_post60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c_tabbar_post60@3x.png"; sourceTree = "<group>"; };
-		4FBFBC6E213429CA003618F3 /* GDTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDTabBarController.h; sourceTree = "<group>"; };
-		4FBFBC6F213429CA003618F3 /* GDTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDTabBarController.m; sourceTree = "<group>"; };
 		4FD1A77E2146BB920005FCA2 /* GDTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDTableViewCell.h; sourceTree = "<group>"; };
 		4FD1A77F2146BB920005FCA2 /* GDTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDTableViewCell.m; sourceTree = "<group>"; };
 		4FDF3F572137D8FE00B8F1C9 /* GDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDViewController.h; sourceTree = "<group>"; };
 		4FDF3F582137D8FE00B8F1C9 /* GDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDViewController.m; sourceTree = "<group>"; };
-		4FDF3F5A2137D91700B8F1C9 /* GDMyNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDMyNetwork.h; sourceTree = "<group>"; };
-		4FDF3F5B2137D91800B8F1C9 /* GDMyNetwork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDMyNetwork.m; sourceTree = "<group>"; };
-		4FDF3F6A21382EC500B8F1C9 /* GDMyInteraction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDMyInteraction.h; sourceTree = "<group>"; };
-		4FDF3F6B21382EC500B8F1C9 /* GDMyInteraction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDMyInteraction.m; sourceTree = "<group>"; };
 		536002A95FDF45F1EEA13D8A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		5A460DA63704E6C57315A8F6 /* Pods_GDProject_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDProject_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D580FEC7FDC1388230442A8 /* Pods-GDProject_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDProject_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GDProject_Tests/Pods-GDProject_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +120,13 @@
 		E525249A216E263600B7CCE7 /* GDMySliderVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDMySliderVC.m; sourceTree = "<group>"; };
 		E525249C216E3E1900B7CCE7 /* GDMySlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDMySlider.h; sourceTree = "<group>"; };
 		E525249D216E3E1A00B7CCE7 /* GDMySlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDMySlider.m; sourceTree = "<group>"; };
+		E53CC86B2179B8C0008B1FB1 /* GDMyNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDMyNetwork.m; sourceTree = "<group>"; };
+		E53CC86C2179B8C0008B1FB1 /* GDUrlCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDUrlCenter.h; sourceTree = "<group>"; };
+		E53CC86D2179B8C0008B1FB1 /* GDMyInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDMyInteraction.h; sourceTree = "<group>"; };
+		E53CC86E2179B8C0008B1FB1 /* GDTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTabBarController.h; sourceTree = "<group>"; };
+		E53CC86F2179B8C0008B1FB1 /* GDUrlCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDUrlCenter.m; sourceTree = "<group>"; };
+		E53CC8702179B8C0008B1FB1 /* GDMyNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDMyNetwork.h; sourceTree = "<group>"; };
+		E53CC8712179B8C0008B1FB1 /* GDTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDTabBarController.m; sourceTree = "<group>"; };
 		E5461426217193DD00B4DCD3 /* MyScrollNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScrollNavigationController.h; sourceTree = "<group>"; };
 		E5461427217193DD00B4DCD3 /* MyScrollNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScrollNavigationController.m; sourceTree = "<group>"; };
 		E5461429217195D600B4DCD3 /* GDTableVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDTableVC.h; sourceTree = "<group>"; };
@@ -134,14 +135,13 @@
 		E546142D217195EC00B4DCD3 /* GDCollectionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDCollectionVC.m; sourceTree = "<group>"; };
 		E546142F2171A38400B4DCD3 /* GDSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDSelectView.h; sourceTree = "<group>"; };
 		E54614302171A38400B4DCD3 /* GDSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDSelectView.m; sourceTree = "<group>"; };
-		E5835FF0217623B000F0DC7F /* GDUrlCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDUrlCenter.h; sourceTree = "<group>"; };
-		E5835FF1217623B000F0DC7F /* GDUrlCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDUrlCenter.m; sourceTree = "<group>"; };
 		E58E805C216A3EFA00899A80 /* GDCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDCollectionViewCell.h; sourceTree = "<group>"; };
 		E58E805D216A3EFA00899A80 /* GDCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDCollectionViewCell.m; sourceTree = "<group>"; };
 		E58E8072216B517200899A80 /* GDCollectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDCollectionHeader.h; sourceTree = "<group>"; };
 		E58E8073216B517200899A80 /* GDCollectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDCollectionHeader.m; sourceTree = "<group>"; };
 		E58E8075216B518800899A80 /* GDCollectionFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDCollectionFooter.h; sourceTree = "<group>"; };
 		E58E8076216B518800899A80 /* GDCollectionFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDCollectionFooter.m; sourceTree = "<group>"; };
+		E5BCB0262179BA3A00EA41DD /* GDMyInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDMyInteraction.m; sourceTree = "<group>"; };
 		F56E11911944B7D49EAF947D /* Pods-GDProject_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDProject_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GDProject_Example/Pods-GDProject_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		FC8413E33DB165E99AA6E567 /* GDProject.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GDProject.podspec; path = ../GDProject.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
@@ -230,30 +230,16 @@
 			path = TableViewController;
 			sourceTree = "<group>";
 		};
-		4FDF3F65213829B500B8F1C9 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				4FBFBC6E213429CA003618F3 /* GDTabBarController.h */,
-				4FBFBC6F213429CA003618F3 /* GDTabBarController.m */,
-				4FDF3F5A2137D91700B8F1C9 /* GDMyNetwork.h */,
-				4FDF3F5B2137D91800B8F1C9 /* GDMyNetwork.m */,
-				4FDF3F6A21382EC500B8F1C9 /* GDMyInteraction.h */,
-				4FDF3F6B21382EC500B8F1C9 /* GDMyInteraction.m */,
-				E5835FF0217623B000F0DC7F /* GDUrlCenter.h */,
-				E5835FF1217623B000F0DC7F /* GDUrlCenter.m */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
 		4FDF3F6821382BC500B8F1C9 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				E53CC86A2179B8C0008B1FB1 /* Base */,
+				4F15529C212AF20400119C41 /* NavigationController */,
+				4FDF3F6921382E3F00B8F1C9 /* NormalViewController */,
+				4FD1A77A2146BB520005FCA2 /* TableViewController */,
+				E58E8071216B508F00899A80 /* CollectionViewController */,
 				E5461425217193BA00B4DCD3 /* ScrollNavigationController */,
 				E5252498216E261400B7CCE7 /* SliderViewController */,
-				E58E8071216B508F00899A80 /* CollectionViewController */,
-				4FD1A77A2146BB520005FCA2 /* TableViewController */,
-				4FDF3F6921382E3F00B8F1C9 /* NormalViewController */,
-				4F15529C212AF20400119C41 /* NavigationController */,
 				4FBFBC402132EFF9003618F3 /* Route */,
 				4F80070D213E530700A89B44 /* TestViewController.h */,
 				4F80070E213E530700A89B44 /* TestViewController.m */,
@@ -311,7 +297,6 @@
 		6003F593195388D20070C39A /* Example for GDProject */ = {
 			isa = PBXGroup;
 			children = (
-				4FDF3F65213829B500B8F1C9 /* Base */,
 				4FDF3F6821382BC500B8F1C9 /* Demo */,
 				4F1552A3212AFF2A00119C41 /* resource */,
 				6003F59C195388D20070C39A /* GDAppDelegate.h */,
@@ -352,6 +337,21 @@
 				E525249A216E263600B7CCE7 /* GDMySliderVC.m */,
 			);
 			path = SliderViewController;
+			sourceTree = "<group>";
+		};
+		E53CC86A2179B8C0008B1FB1 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E53CC86D2179B8C0008B1FB1 /* GDMyInteraction.h */,
+				E5BCB0262179BA3A00EA41DD /* GDMyInteraction.m */,
+				E53CC8702179B8C0008B1FB1 /* GDMyNetwork.h */,
+				E53CC86B2179B8C0008B1FB1 /* GDMyNetwork.m */,
+				E53CC86E2179B8C0008B1FB1 /* GDTabBarController.h */,
+				E53CC8712179B8C0008B1FB1 /* GDTabBarController.m */,
+				E53CC86C2179B8C0008B1FB1 /* GDUrlCenter.h */,
+				E53CC86F2179B8C0008B1FB1 /* GDUrlCenter.m */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		E5461425217193BA00B4DCD3 /* ScrollNavigationController */ = {
@@ -527,28 +527,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				E546142E217195EC00B4DCD3 /* GDCollectionVC.m in Sources */,
+				E5BCB0272179BA3B00EA41DD /* GDMyInteraction.m in Sources */,
 				4F1552A1212AF20400119C41 /* GDTestNavigationController.m in Sources */,
+				E53CC8742179B8C1008B1FB1 /* GDTabBarController.m in Sources */,
 				E54614312171A38400B4DCD3 /* GDSelectView.m in Sources */,
 				4FB39BB7214FD73300AEF8D8 /* GDRouter.m in Sources */,
 				E525249E216E3E1A00B7CCE7 /* GDMySlider.m in Sources */,
-				4FBFBC70213429CA003618F3 /* GDTabBarController.m in Sources */,
 				E58E8077216B518800899A80 /* GDCollectionFooter.m in Sources */,
 				E525249B216E263600B7CCE7 /* GDMySliderVC.m in Sources */,
 				E58E8074216B517200899A80 /* GDCollectionHeader.m in Sources */,
 				4FD1A7802146BB920005FCA2 /* GDTableViewCell.m in Sources */,
 				E58E805E216A3EFA00899A80 /* GDCollectionViewCell.m in Sources */,
 				E546142B217195D600B4DCD3 /* GDTableVC.m in Sources */,
+				E53CC8722179B8C1008B1FB1 /* GDMyNetwork.m in Sources */,
 				4FDF3F592137D8FE00B8F1C9 /* GDViewController.m in Sources */,
 				4FBFBC432132F012003618F3 /* RouteVC.m in Sources */,
+				E53CC8732179B8C1008B1FB1 /* GDUrlCenter.m in Sources */,
 				4F800720213EBDBD00A89B44 /* GDNewToastInteraction.m in Sources */,
 				6003F59E195388D20070C39A /* GDAppDelegate.m in Sources */,
 				4F80071D213EBD9C00A89B44 /* GDNewToastVC.m in Sources */,
 				4F80070F213E530700A89B44 /* TestViewController.m in Sources */,
-				4FDF3F6C21382EC500B8F1C9 /* GDMyInteraction.m in Sources */,
 				E5461428217193DD00B4DCD3 /* MyScrollNavigationController.m in Sources */,
-				4FDF3F5C2137D91800B8F1C9 /* GDMyNetwork.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				E5835FF2217623B000F0DC7F /* GDUrlCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

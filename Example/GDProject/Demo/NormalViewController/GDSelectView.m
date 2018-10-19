@@ -26,6 +26,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        
         self.btns = [NSMutableArray array];
         
         self.selectBtn = [UIButton buttonWithTitle:@"选择" TitleColor:[UIColor blackColor] font:14];
@@ -85,12 +87,6 @@
             }];
         }
     }
-    
-//    CGSize btnSize = [self.selectBtn systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    CGSize contentSize = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    self.
-//    self.hideBounds = CGRectMake(0, 0, btnSize.width, btnSize.height);
-//    self.showBounds = CGRectMake(0, 0, contentSize.width, btnSize.height + contentSize.height);
 }
 
 - (void)btnAction:(UIButton *)btn {

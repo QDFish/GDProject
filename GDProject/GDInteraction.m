@@ -128,6 +128,14 @@
     
 }
 
++ (Class)refreshHeaderClass {
+    return [MJRefreshNormalHeader class];
+}
+
++ (Class)refreshFooterClass {
+    return [MJRefreshAutoNormalFooter class];
+}
+
 @end
 
 @implementation GDInteraction (ViewControllerLifeCycle)
@@ -138,7 +146,7 @@
 
         if (self.canPullDown) {
             __weak typeof(self) weakSelf = self;
-            self.vc.gd_tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            self.vc.gd_tableView.mj_header = [[self.class refreshHeaderClass] headerWithRefreshingBlock:^{
                 [weakSelf prepareForPullDownLoad];
                 [weakSelf.vc loadDownForNewData];
             }];
@@ -146,7 +154,7 @@
         
         if (self.canPullUp) {
             __weak typeof(self) weakSelf = self;
-            self.vc.gd_tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            self.vc.gd_tableView.mj_footer = [[self.class refreshFooterClass] footerWithRefreshingBlock:^{
                 [weakSelf prepareForPullUpLoad];
                 [weakSelf.vc loadUpForMoreData];
             }];

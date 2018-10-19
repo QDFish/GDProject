@@ -26,6 +26,12 @@
     return work;
 }
 
+
+/**
+ 自定义交互控件
+
+ @return 返回自定义控件类型
+ */
 - (NSString *)interactionClassNameOfInstance {
     return @"GDNewToastInteraction";
 }

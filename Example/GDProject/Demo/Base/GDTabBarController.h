@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+/**
+ 继承UITabBarController初始化app的tabbar导航
+ */
 @interface GDTabBarController : UITabBarController
 
 + (instancetype)shareInstance;
