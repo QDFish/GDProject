@@ -22,7 +22,7 @@
 
 ## Installation
 
-由于未经过深度实践，暂不制作pop
+由于未经过深度实践，暂不制作pod
 
 ## Author
 
